@@ -46,15 +46,15 @@
   "lwp_options":{  
     "total_listings":"2",
     "txt_price":"Price",
-    "categories":{  
-      "make":{  
+    "categories":[  
+      { "name": "make",  
         "plural":"makes",
         "terms": ["Porsche","Corolla"]
       },
-      "Year":{  
+      { "name": "Year",  
         "plural":"Year",
         "terms": ["2009","2010"]
       }
-    }
+    ]
   }
 }
