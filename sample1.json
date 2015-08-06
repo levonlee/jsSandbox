@@ -50,7 +50,7 @@
       "make":{  
         "plural":"makes",
         "terms": ["Porsche","Corolla"]
-      }
+      },
       "Year":{  
         "plural":"Year",
         "terms": ["2009","2010"]
