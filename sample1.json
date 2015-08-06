@@ -24,22 +24,22 @@
     {  
       "id":"388",
       "price":{  
-        "value":"39995"
+        "value":"20005"
       },
-      "post_title":"2009 Porsche Carrera 4S Turbo Convertible",
+      "post_title":"2010 Toyota Corolla Convertible",
       "image_src":"https:\/\/raw.githubusercontent.com\/levonlee\/jsSandbox\/master\/images\/2-carrera-13-200x150.jpg",      
       "car_sold":0,
-      "yr":"2009",
-      "price":"39995",
+      "yr":"2010",
+      "price":"20005",
       "post_meta":{  
         "price":{  
-          "value":"39995"
+          "value":"20005"
         },
-        "post_title":"2009 Porsche Carrera 4S Turbo Convertible",
+        "post_title":"2010 Toyota Corolla Convertible",
         "image_src":"https:\/\/raw.githubusercontent.com\/levonlee\/jsSandbox\/master\/images\/2-carrera-13-200x150.jpg",
         "car_sold":0,
-        "yr":"2009",
-        "price":"39995"
+        "yr":"2010",
+        "price":"20005"
       }
     }
   ],
@@ -48,7 +48,12 @@
     "txt_price":"Price",
     "categories":{  
       "make":{  
-        "plural":"makes"
+        "plural":"makes",
+        "terms": ["Porsche","Corolla"]
+      }
+      "Year":{  
+        "plural":"Year",
+        "terms": ["2009","2010"]
       }
     }
   }
