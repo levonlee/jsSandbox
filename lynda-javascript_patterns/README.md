@@ -1,0 +1,13 @@
+- Types of design patterns
+ - Creational
+    - Constructor pattern
+    - Singleton
+        - There's no way for ES6 to enforce. A hack of a global variable is used to make sure the class is instantiated once
+    - Factory
+    - Abstract Factory
+        - Factory of factories
+ - Structural
+    - Module Pattern
+    - Mixins Pattern
+        - Add a mixin method after an object is instantiated: `Object.assign(Car.prototype, carMixin);`
+ - Behavioral
