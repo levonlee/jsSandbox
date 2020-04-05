@@ -10,4 +10,19 @@
     - Module Pattern
     - Mixins Pattern
         - Add a mixin method after an object is instantiated: `Object.assign(Car.prototype, carMixin);`
+    - Facade Pattern
+        - provide a simplified interface to a library, a framework, or any other complex set of classes
+    - Flyweight Pattern
+        - fit more objects into the available amount of RAM by sharing common parts of state between multiple objects instead of keeping all of the data in each object.
+    - Decorator Pattern
+        - attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors
+        - https://www.typescriptlang.org/docs/handbook/decorators.html#decorators
  - Behavioral
+    - Observer Pattern
+    - State Pattern
+        - 04_02 `src/components/App.js`
+    - Iterator Pattern
+    - Strategy Pattern
+    - Memento Pattern
+        - Provide a temporary state of data retaining the info while being converted from one format to another
+    - Command pattern
