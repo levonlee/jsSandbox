@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser-polyfill.js"></script>
+	<script type="text/babel">
+		function* eachItem(arr) {
+			for(var i=0; i< arr.length; i++) {
+				yield arr[i];
+			}
+		}
+
+		var letters = eachItem(["a", "b", "c", "d", "e", "f", "g"]);
+
+		var abcs = setInterval(function(){
+			var letter = letters.next();
+			if(letter.done) {
+				clearInterval(abcs);
+				console.log("Now I know my ABC's");
+			} else {
+				console.log(letter.value);
+			}
+		},
+
+			500);
+
+		// Generator.prototype.next( value )
+		// return :: { value: any, done: boolean }
+
+		function* gen() {
+			yield 1;
+			yield 2;
+			yield 3;
+		}
+		const g = gen(); // "Generator { }"
+		g.next();      // "Object { value: 1, done: false }"
+		g.next();      // "Object { value: 2, done: false }"
+		g.next();      // "Object { value: 3, done: false }"
+		g.next();      // "Object { value: undefined, done: true }"
+
+		// generator.next( value )
+		function* gen2() {
+			while (true) {
+				let v = yield null; // v is modified based on g.next(1)
+				console.log(v);
+			}
+		}
+		const g2 = gen2();
+		g.next(1) // console.log(1)
+		g.next(2) // console.log(2)
+
+		// Generator.prototype.return( value )
+		// return :: { value: any, done: boolean } where `value` is the same as provided `value`
+
+		function* gen3() {
+			yield 1;
+			yield 2;
+			yield 3;
+		}
+
+		const g3 = gen3();
+
+		g3.next();        // { value: 1, done: false }
+		g3.return('foo'); // { value: "foo", done: true }
+		g3.next();        // { value: undefined, done: true }
+
+		// Generator.prototype.throw( exception )
+		// return :: { value: any, done: boolean }
+
+		function* genException() {
+			while(true) {
+				try {
+					yield 1;
+					yield 2;
+					yield 3;
+				} catch(e) {
+					console.log('Error caught!');
+				}
+			}
+		}
+
+		const gException = genException();
+		console.log(gException.next()); // { value: 1, done: false }
+		console.log(gException.throw(new Error('Something went wrong')));
+		// "Error caught!"
+		// { value: 1, done: false }
+		console.log(gException.next()); // { value: 2, done: false }
+
+	</script>
+	<title>Generators</title>
+</head>
+<body>
+</body>	
+</html>
+
+
+
+
+
+
+
+
