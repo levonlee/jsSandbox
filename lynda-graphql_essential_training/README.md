@@ -90,3 +90,8 @@ fragment friendFragment on Friend {
     lastName
 }
 ```
+
+# Why GraphQL vs REST?
+- Type inspection
+- Query multiple DBs from one GraphQL server
+- Flexibility of the queries
