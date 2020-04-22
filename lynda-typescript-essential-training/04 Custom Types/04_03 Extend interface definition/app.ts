@@ -12,7 +12,7 @@ interface Todo {
 
 interface jQuery {
     (selector: (string | any)): jQueryElement;
-    fn: any;
+    fn: any; // This is usually for extending. e.g. $.fn.myApp = ...
     version: number;
 }
 

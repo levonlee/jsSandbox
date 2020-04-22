@@ -1,5 +1,6 @@
 class TodoService {
 
+    // TodoService.lastId = 0;
     static lastId: number = 0;
 
     constructor(private todos: Todo[]) {
@@ -13,6 +14,8 @@ class TodoService {
         return this.todos;
     }
 
+    // ITSME it is not prototype!
+    // TodoService.getNextId = function () { ... }
     static getNextId() {
         return TodoService.lastId += 1;
     }

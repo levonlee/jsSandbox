@@ -1,7 +1,7 @@
 
 interface Todo {
     name: string;
-    completed?: boolean;
+    completed?: boolean; // ITSME `?` means does not have to implement it
 }
 
 interface ITodoService {
