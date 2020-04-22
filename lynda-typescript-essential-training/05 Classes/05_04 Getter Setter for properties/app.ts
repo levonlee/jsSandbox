@@ -1,3 +1,5 @@
+// getter and setter are called accessor
+
 class TodoService {
 
     static lastId: number = 0;

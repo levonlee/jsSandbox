@@ -3,11 +3,6 @@ interface Todo {
     state: TodoState;
 }
 
-var todo: Todo = {
-    name: "Pick up drycleaning",
-    state: TodoState.New
-}
-
 enum TodoState {
     New = 1,
     Active,
@@ -15,7 +10,12 @@ enum TodoState {
     Deleted
 }
 
-function delete(todo: Todo) {
+var todo: Todo = {
+    name: "Pick up dry cleaning",
+    state: TodoState.New // a todo-state that is "New"
+}
+
+function deleteTodo(todo: Todo) {
     if(todo.state != TodoState.Complete) {
         throw "Can't delete incomplete task!"
     }

@@ -11,10 +11,12 @@ TodoService.prototype.getAll = function() {
 */
 
 class TodoService {
-    
+
+    // function TodoService() { ... }
     constructor(private todos: Todo[]) {
     }
-    
+
+    // TodoService.prototype.getAll = function () { ... }
     getAll() {
         return this.todos;
     }
