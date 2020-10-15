@@ -6,24 +6,57 @@
     <style>
         #iframe-container {
             background-color: blue;
+            margin:0 auto;
+        }
+        #iframe-container iframe{
+            background-color: red;
         }
         @media (min-width: 400px) {
             #iframe-container {
-                width: 300px;
+                width: 100%;
             }
         }
         @media (min-width: 800px) {
             #iframe-container {
-                width: 500px;
+                width: 50%;
             }
         }
     </style>
 </head>
 <body>
 <!-- Parent window that has the iframe -->
-<div id="iframe-container">
-    <iframe src="http://git.post80s.com/jsSandbox/iframe-dynamic-height-iframe.html" frameborder="no" style="border:none;width:100%;"></iframe>
-</div>
+<div id="iframe-container"></div>
+
+<script>
+  lead = {
+    sourceIframe: 'http://git.post80s.com/jsSandbox/iframe-dynamic-height-iframe.html', // http://localhost:63342/jsSandbox/docs/iframe-dynamic-height-iframe.html
+    container: 'iframe-container',
+    setIframeHeight: function (height) {
+      console.log('set iframe height to: ' + height);
+      var iframe = document.getElementById(this.container).getElementsByTagName('iframe');
+      if (iframe.length > 0) {
+        iframe = iframe[0];
+      }
+      else {
+        return;
+      }
+      iframe.style.height = height + 'px';
+    },
+    insertIframe: function() {
+      document.getElementById(this.container).innerHTML = '<iframe src="' + this.sourceIframe + '?v=' + Date.now() +'" frameborder="no" style="border:none;width:100%;"></iframe>';
+    },
+  };
+
+  lead.insertIframe();
+
+  window.addEventListener('message', function (e) {
+    switch (e.data.type) {
+      case 'docHeight':
+        lead.setIframeHeight(e.data.data);
+        break;
+    }
+  }, false);
+</script>
 
 </body>
 </html>
