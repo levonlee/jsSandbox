@@ -23,8 +23,13 @@
 <!-- This is the HTML inside an iframe -->
 <div>
     <p>Resize the browser window to fire the <code>resize</code> event.</p>
-    <p>Window height: <span id="height"></span></p>
-    <p>Window width: <span id="width"></span></p>
+    <p>window.innerHeight: <span id="height"></span></p>
+    <p>window.innerWidth: <span id="width"></span></p>
+    <p>document.body.scrollHeight: <span id="bodyscrollheight"></span></p>
+    <p>document.body.offsetHeight: <span id="bodyoffsetheight"></span></p>
+    <p>document.documentElement.scrollHeight &lt;html&gt;: <span id="htmlscrollheight"></span></p>
+    <p>document.documentElement.offsetHeight &lt;html&gt;: <span id="htmloffsetheight"></span></p>
+    <p>document.documentElement.clientHeight &lt;html&gt;: <span id="htmlclientheight"></span></p>
 </div>
 <div id="div1">
     hello
@@ -34,12 +39,28 @@
   leadForm = {
     heightOutput: document.querySelector('#height'),
     widthOutput: document.querySelector('#width'),
+    bodyScrollHeightOutput: document.querySelector('#bodyscrollheight'),
+    bodyOffsetHeightOutput: document.querySelector('#bodyoffsetheight'),
+    htmlScrollHeightOutput: document.querySelector('#htmlscrollheight'),
+    htmlOffsetHeightOutput: document.querySelector('#htmloffsetheight'),
+    htmlClientHeightOutput: document.querySelector('#htmlclientheight'),
     getDocHeight: function(doc) {
       doc = doc || document;
       var body = doc.body;
       var html = doc.documentElement;
-      return Math.max( body.scrollHeight, body.offsetHeight,
-        html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+      leadForm.heightOutput.textContent = window.innerHeight;
+      leadForm.widthOutput.textContent = window.innerWidth;
+      leadForm.bodyScrollHeightOutput.textContent = body.scrollHeight;
+      leadForm.bodyOffsetHeightOutput.textContent = body.offsetHeight;
+      leadForm.htmlScrollHeightOutput.textContent = html.scrollHeight;
+      leadForm.htmlOffsetHeightOutput.textContent = html.offsetHeight;
+      leadForm.htmlClientHeightOutput.textContent = html.clientHeight;
+
+      /* Math.max( body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight )
+      */
+      return html.offsetHeight;
     },
     msgDocHeight: function() {
       parent.postMessage({
@@ -48,8 +69,7 @@
       }, '*');
     },
     msgWindowResize: function() {
-      leadForm.heightOutput.textContent = window.innerHeight;
-      leadForm.widthOutput.textContent = window.innerWidth;
+      leadForm.getDocHeight();
       leadForm.msgDocHeight();
     },
   };
