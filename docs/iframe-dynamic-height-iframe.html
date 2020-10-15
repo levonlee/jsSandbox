@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iframe that dynamically adjusts its height</title>
+    <style>
+        #div1 {
+            background-color: yellow;
+        }
+        @media (min-width: 400px) {
+            #div1 {
+                height: 300px;
+            }
+        }
+        @media (min-width: 800px) {
+            #div1 {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- This is the HTML inside an iframe -->
+<div>
+    <p>Resize the browser window to fire the <code>resize</code> event.</p>
+    <p>Window height: <span id="height"></span></p>
+    <p>Window width: <span id="width"></span></p>
+</div>
+<div id="div1">
+    hello
+</div>
+
+<script>
+  leadForm = {
+    heightOutput: document.querySelector('#height'),
+    widthOutput: document.querySelector('#width'),
+    getDocHeight: function(doc) {
+      doc = doc || document;
+      var body = doc.body;
+      var html = doc.documentElement;
+      return Math.max( body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight );
+    },
+    msgDocHeight: function() {
+      parent.postMessage({
+        type: 'docHeight',
+        data: leadForm.getDocHeight(),
+      }, '*');
+    },
+    msgWindowResize: function() {
+      leadForm.heightOutput.textContent = window.innerHeight;
+      leadForm.widthOutput.textContent = window.innerWidth;
+      leadForm.msgDocHeight();
+    },
+  };
+  window.addEventListener('resize', leadForm.msgWindowResize);
+  window.addEventListener('load', leadForm.msgDocHeight, false);
+</script>
+</body>
+</html>

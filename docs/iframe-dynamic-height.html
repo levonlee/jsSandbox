@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Parent window that has the iframe</title>
+    <style>
+        #iframe-container {
+            background-color: blue;
+        }
+        @media (min-width: 400px) {
+            #iframe-container {
+                width: 300px;
+            }
+        }
+        @media (min-width: 800px) {
+            #iframe-container {
+                width: 500px;
+            }
+        }
+    </style>
 </head>
 <body>
-hello
+<!-- Parent window that has the iframe -->
+<div id="iframe-container">
+    <iframe src="http://git.post80s.com/jsSandbox/iframe-dynamic-height-iframe.html" frameborder="no" style="border:none;width:100%;"></iframe>
+</div>
+
 </body>
 </html>
