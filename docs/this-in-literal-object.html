@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this in literal object</title>
+</head>
+<body>
+
+<button id="btn">Click me</button>
+
+<script>
+  abc = {
+    a: 10,
+    b: function () {
+      return this.a;
+    },
+    loadEvent: function () {
+      document.getElementById('btn').addEventListener('click', function () {
+        console.log(this, 'this in abc.loadEvent'); // this is now the target element
+        // so this.b() is not defined
+      });
+    },
+  };
+
+  // traditional function (anonymous) `b` is in an instance `abc`, the instance's `a` is 10
+  console.log(abc.b(), 'abc.b()'); // 10
+  console.log(window.a, 'window.a'); // undefined
+
+  var o = { prop: 37 };
+
+  function independent () {
+    return this.prop;
+  }
+
+  o.f = independent;
+  // the called traditional function `independent` is now in an instance `o`, the instance's `prop` is 37
+  console.log(o.f(), 'o.f()'); // 37
+
+  // the called traditional function `independent` is now in an instance `b`, the instance's `prop` is 42
+  o.b = { g: independent, prop: 42 };
+  console.log(o.b.g(), 'o.b.g()'); // 42
+
+  var o = { f: function () { return this.a + this.b; } };
+  var p = Object.create(o);
+  p.a = 1;
+  p.b = 4;
+  // the called traditional function `f` is now in an instance `p`, the instance's `a` is 1 and `b` is 4
+  console.log(p.f(), 'p.f()'); // 5
+
+  xyz = {
+    a: 100,
+    b: abc.b,
+  };
+
+  // abc.b now belongs to instance xyz and xyz's `a` is 100
+  console.log(xyz.b(), 'xyz.b()'); // 100
+
+  abc.loadEvent();
+</script>
+</body>
+</html>
