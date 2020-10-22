@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+// cannot use `var a = abc()` nor `let` inside if statements
+// it defines a global variable
+if ((a = abc()) === 'abc') {
+  console.log(a); // abc
+}
+function abc () {
+  return 'abc';
+}
+function xyz() {
+  if ((b = abc()) === 'abc') {
+    console.log(b, 'b inside xyz');
+  }
+}
+console.log(a); // abc
+//console.log(b); // undefined
+xyz(); //
+console.log(b); // abc. now it's defined
+</script>
+
+</body>
+</html>
