@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+var hello = 'Hello';
+
+var abc = (function () {
+  var computeField1 = hello + ' World';
+  return {
+    status: computeField1,
+  };
+})();
+abc = JSON.stringify(abc);
+console.log(abc); // {"status":"Hello World"}
+</script>
+
+</body>
+</html>
