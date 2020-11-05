@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- The below script has recaptcha__en.js dynamically -->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+</head>
+<body>
+<!--
+a div is inserted to the DOM with:
+- div.grecaptcha-badge (with position:fixed) is inserted to the DOM
+    - div.grecaptch-logo
+    - div.grecaptcha-error
+    - textarea#g-recaptcha-response
+- iframe (with display:none)
+
+2 events are attached to this button: click and submit
+-  click event is bound to onHello
+- submit event I think is for Google usage
+
+Before onHello is called, a POST request is made and the response is saved to #g-recaptcha-response
+-->
+<button class="g-recaptcha"
+        data-sitekey="6LdEet8ZAAAAAAaHOLAzETz7wK7W4g1b59ybvfnZ"
+        data-callback='onHello'
+        data-action='hello' id="button">Hello reCaptcha v3!
+</button>
+<script>
+function onHello (token) {
+  console.log(token);
+  //document.getElementById("demo-form").submit();
+}
+</script>
+
+</body>
+</html>
