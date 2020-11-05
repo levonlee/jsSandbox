@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google reCaptcha v3 dynamic load</title>
+</head>
+<body>
+<p><a href="google-recaptcha-v3-dynamically-loaded.html">Simple load example</a></p>
+<button id="button" onclick="onClick(event)">Hello reCaptcha v3 dynamic load!
+</button>
+
+<script>
+(function() {
+  var g = document.createElement('script'), s = document.scripts[0];
+  g.src = 'https://www.google.com/recaptcha/api.js?render=6LdEet8ZAAAAAAaHOLAzETz7wK7W4g1b59ybvfnZ';
+  g.async = true;
+  g.defer = true;
+  s.parentNode.insertBefore(g, s);
+})()
+
+function onClick (e) {
+  e.preventDefault();
+  grecaptcha.ready(function () {
+    grecaptcha.execute('6LdEet8ZAAAAAAaHOLAzETz7wK7W4g1b59ybvfnZ', { action: 'hello' }).then(function (token) {
+      console.log(token);
+      // Add your logic to submit to your backend server here.
+    });
+  });
+}
+</script>
+</body>
+</html>
