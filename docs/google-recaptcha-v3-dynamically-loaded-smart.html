@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google reCaptcha v3 dynamic load</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<h2>v2 and v3 can coexist</h2>
+<p><a href="google-recaptcha-v3-dynamically-loaded.html">Simple load example</a></p>
+<button id="button" onclick="onClick(event)">Hello reCaptcha v3 dynamic load!
+</button>
+
+<!-- This is version 2-->
+<div class="g-recaptcha" data-sitekey="6LcIhd8ZAAAAAILIBgVVj4ScTkzON5FCxBA8_ryR" data-callback="callbackV2"></div>
+
+<script>
+setTimeout(function () {
+  console.log('load v3 reCaptcha with a v3 site key');
+  var g = document.createElement('script'), s = document.scripts[0];
+  g.src = 'https://www.google.com/recaptcha/api.js?render=6LdEet8ZAAAAAAaHOLAzETz7wK7W4g1b59ybvfnZ';
+  g.async = true;
+  g.defer = true;
+  s.parentNode.insertBefore(g, s);
+}, 5000);
+
+function callbackV2 (token) {
+  console.log(token, 'v2 token');
+}
+
+function onClick (e) {
+  e.preventDefault();
+  grecaptcha.ready(function () {
+    grecaptcha.execute('6LdEet8ZAAAAAAaHOLAzETz7wK7W4g1b59ybvfnZ', { action: 'hello' }).then(function (token) {
+      console.log(token, 'v3 token');
+      // Add your logic to submit to your backend server here.
+    });
+  });
+}
+</script>
+</body>
+</html>
