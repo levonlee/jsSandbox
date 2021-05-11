@@ -22,7 +22,7 @@
     "express-graphql": "^0.9.0",
     "graphql": "^15.0.0",
     "graphql-tools": "^4.0.7",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mongoose": "^5.9.7",
     "sequelize": "^5.21.6",
     "sqlite3": "^4.1.1"
