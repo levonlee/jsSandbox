@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM Manipulation</title>
+</head>
+<body>
+
+<table id="table"></table>
+
+<script>
+    var moduleDocumentFragment = function () {
+        return {
+            data: [1, 2, 3, 4],
+            rows: 3,
+            addTable: function () {
+                var td, tr;
+                var frag = document.createDocumentFragment();
+                var frag2 = document.createDocumentFragment();
+                for (var i = 0; i < this.rows; i++) {
+                    tr = document.createElement('tr');
+                    for (var j = 0; j < this.data.length; j++) {
+                        td = document.createElement('td');
+                        td.appendChild(document.createTextNode(this.data[j]));
+                        // IMPORTANT Add DOM element to fragment
+                        frag2.appendChild(td);
+                    }
+                    // IMPORTANT Add fragment to DOM element, once the fragment is added to DOM, the fragment becomes empty
+                    tr.appendChild(frag2);
+                    // IMPORTANT Add DOM element to fragment
+                    frag.appendChild(tr);
+                }
+                // IMPORTANT Add fragment to DOM element
+                document.getElementById('table').appendChild(frag);
+            }
+        };
+    }();
+    moduleDocumentFragment.addTable();
+</script>
+</body>
+</html>
