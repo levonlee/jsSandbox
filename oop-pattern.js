@@ -1,8 +1,10 @@
 // Simple OOP pattern or prototypal pattern
 Vehicle = function (year, make, model) {
+    //region Public properties
     this.year = year;
     this.make = make;
     this.model = model;
+    //endregion
 };
 Vehicle.prototype.publicProperty = '';
 Vehicle.prototype.getInfo = function () {
@@ -39,8 +41,13 @@ Vehicle.prototype.startEngine = function () {
     // Just remember to include the necessary closure like the above
     ns.Vehicle = (function () {
 
+        // Don't Do This!
+        // - Since it's not in prototype, this privateStaticProperty cannot be inherited
+        // - And if any prototypal method uses this variable in child class, it will throw error
+        var privateStaticProperty = 'Vehicle Private Property';
+
         function Vehicle(year, make, model) {
-            //region private properties
+            //region public properties
             this.year = year;
             this.make = make;
             this.model = model;
@@ -49,12 +56,17 @@ Vehicle.prototype.startEngine = function () {
 
         //region Public methods
         Vehicle.prototype.getInfo = function () {
-            // Use private properties
+            // Use public properties
             return this.year + ' ' + this.make + ' ' + this.model;
         };
-
         Vehicle.prototype.startEngine = function () {
             return 'Vroom';
+        };
+        Vehicle.prototype.setPrivateStaticProperty = function (value) {
+            privateProperty = value;
+        };
+        Vehicle.prototype.getPrivateStaticProperty = function () {
+            return privateProperty;
         };
         //endregion
 
