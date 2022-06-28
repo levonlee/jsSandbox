@@ -5,11 +5,11 @@
 	<title>HTMLElement.click()</title>
 </head>
 <body>
-<input id="mycheckbox" type="checkbox">
+<input id="mycheckbox" type="checkbox" onclick="console.log('checkbox is clicked.');">
 <p></p>
 <button onclick="document.getElementById('mycheckbox').click()">Click to toggle checkbox</button>
 <p></p>
-<input id="myradio" type="radio">
+<input id="myradio" type="radio" onclick="console.log('radio is clicked.');">
 <p></p>
 <button onclick="document.getElementById('myradio').click()">Click to always check a radio</button>
 </body>
