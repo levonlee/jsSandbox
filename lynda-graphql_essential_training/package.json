@@ -23,7 +23,7 @@
     "graphql": "^15.0.0",
     "graphql-tools": "^4.0.7",
     "lodash": "^4.17.15",
-    "mongoose": "^5.9.7",
+    "mongoose": "^5.13.15",
     "sequelize": "^5.21.6",
     "sqlite3": "^4.1.1"
   }
