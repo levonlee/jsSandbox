@@ -24,10 +24,12 @@ var Singleton = function () {
             return privateCounter;
         },
         callbackExample: function () {
+            var localGetValue = this.getValue;
             [].forEach.call(
                 document.getElementsByClassName('my-class'),
                 function (ele) {
                     changeBy(1);
+                    console.log('callBackExample', localGetValue());
                 }
             )
         },
