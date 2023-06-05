@@ -1,4 +1,4 @@
-var Singleton = function () {
+Singleton = function () {
     var privateCounter = 0;
 
     function changeBy(val) {
@@ -50,3 +50,21 @@ console.log(Singleton.getValue());
 Singleton.callBothPrivatePublicMethods();
 // 6
 console.log(Singleton.getValue());
+
+// Non-singleton
+// Expose module as global variable
+Module = function () {
+    // private methods
+    function sayHello() {
+        console.log('Hello. I am an instance of Module');
+    }
+
+    return {
+        sayHello: sayHello
+    }
+};
+
+var moduleInstance1 = Module();
+// Or
+var moduleInstance2 = new Module();
+moduleInstance1.sayHello();
