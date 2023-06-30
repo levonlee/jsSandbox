@@ -1,4 +1,4 @@
-Singleton = function () {
+Singleton = (function () {
     var privateCounter = 0;
 
     function changeBy(val) {
@@ -43,7 +43,7 @@ Singleton = function () {
             )
         },
     };
-}();
+}());
 
 // Hello
 Singleton.sayHello();
