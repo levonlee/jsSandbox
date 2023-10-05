@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<div id="ul"></div>
+<div id="ul-babel"></div>
+<div id="ul-jsx"></div>
+<div id="ul-jsx-component"></div>
+<div id="ul-jsx-components"></div>
+<div id="ul-jsx-components-dynamic-data" data-lili="123"></div>
+
+<script type="text/javascript">
+    let heading = React.createElement("h1", null, "Getting Started! Injected by React");
+    ReactDOM.render(
+        heading,
+        document.getElementById("root")
+    );
+    let ul = React.createElement(
+        "ul",
+        {style: {color: "red"}},
+        React.createElement("li", null, "Monday"),
+        React.createElement("li", null, "Tuesday")
+    );
+    ReactDOM.render(
+        ul,
+        document.getElementById("ul")
+    );
+</script>
+
+<script type="text/babel">
+    ReactDOM.render(
+        <ul>
+            <li>🤖</li>
+            <li>🤠</li>
+            <li>🌝</li>
+        </ul>,
+        document.getElementById("ul-babel")
+    );
+</script>
+
+<script type="text/babel">
+    let robot = "🤖";
+    let name = "React";
+    ReactDOM.render(
+        <ul>
+            <li>{robot}</li>
+            <li>🤠</li>
+            <li>🌝</li>
+            <li>{name.toUpperCase()}</li>
+            <li>{name.length}</li>
+        </ul>,
+        document.getElementById("ul-jsx")
+    );
+</script>
+
+<script type="text/babel">
+    function Header(props) {
+        console.log(props);
+        return (
+            <header>
+                <h1>{props.name}'s Kitchen ({props["data-lili"]})</h1>
+            </header>
+        );
+    }
+
+    const dishes = [
+        "Black Bean Soup",
+        "Macaroni and Cheese",
+        "Salmon and Potatoes",
+        "Pizza"
+    ];
+    const dishObjects = dishes.map(
+        (dish, i) => ({
+            id: i,
+            title: dish
+        })
+    );
+
+    function Main(props) {
+        return (
+            <section>
+                <ul>
+                    {props.dishes.map((dish) => (
+                        <li key={dish.id}>
+                            {dish.title}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        );
+    }
+
+    function Footer(props) {
+        return (
+            <footer>
+                <p>Copyright {props.year}</p>
+            </footer>
+        );
+    }
+
+    function App(props) {
+        // ReactDOMRoot
+        console.log(props.parent);
+        return (
+            <div>
+                <Header name="Cindy" data-lili="lili" />
+                <Main dishes={dishObjects} />
+                <Footer
+                    year={new Date().getFullYear()}
+                />
+            </div>
+        );
+    }
+
+    // Use createRoot + reactRoot.render in React 18
+    let root = ReactDOM.createRoot(document.getElementById("ul-jsx-component"));
+    root.render(
+        <Header name="Cindy" />
+    );
+    root = ReactDOM.createRoot(document.getElementById("ul-jsx-components"));
+    root.render(
+        <App />
+    );
+    root = ReactDOM.createRoot(document.getElementById("ul-jsx-components-dynamic-data"));
+    root.render(
+        <App
+            parent={root}
+        />
+    );
+</script>
+
+</body>
+</html>
