@@ -11,10 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@reduxjs/toolkit@1.9.7/dist/redux-toolkit.umd.min.js"></script>
 </head>
 <body>
-<div id="value">
-</div>
+<div id="loan-123"></div>
 <script>
-
     // features/counter/counterSlice.js begins
     // counterSlice contains
     counterSlice = RTK.createSlice({
@@ -63,19 +61,9 @@
     // app/store.js ends
 </script>
 <script type="text/babel">
-    // index.js begins
-    var valueEl = document.getElementById('value')
-    let root = ReactDOM.createRoot(valueEl);
-    root.render(
-        <ReactRedux.Provider store={store}>
-            <App />
-        </ReactRedux.Provider>
-    );
-    // index.js ends
-
     // features/counter/Counter.js begins
     // import counterSlice: get public actions, get state selector
-    function Counter() {
+    function BorrowerSection() {
         const count = ReactRedux.useSelector(selectCount);
         const dispatch = ReactRedux.useDispatch();
         const [incrementAmount, setIncrementAmount] = React.useState('2');
@@ -110,15 +98,26 @@
     }
     // features/counter/Counter.js ends
 
-    function App(){
+    function Loan(){
         return(
             <div>
-                <p>Hello</p>
-                <Counter />
-                <p>World</p>
+                <p>Loan View Header</p>
+                <BorrowerSection />
+                <p>Loan View Footer</p>
             </div>
         )
     }
+
+    // index.js begins
+    var valueEl = document.getElementById('loan-123')
+    let root = ReactDOM.createRoot(valueEl);
+    root.render(
+        <ReactRedux.Provider store={store}>
+            <Loan />
+        </ReactRedux.Provider>
+    );
+    // index.js ends
+
 </script>
 </body>
 </html>
