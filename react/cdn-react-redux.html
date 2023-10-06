@@ -11,17 +11,29 @@
     <script src="https://cdn.jsdelivr.net/npm/@reduxjs/toolkit@1.9.7/dist/redux-toolkit.umd.min.js"></script>
 </head>
 <body>
+<p>
+    Inspired by the <a href="https://react-redux.js.org/tutorials/quick-start">React Redux Example</a>
+</p>
 <div id="loan-123"></div>
+<button onclick="showLoan(123)">Show Loan 123</button>
+<div id="loan-444"></div>
+<button onclick="showLoan(444)">Show Loan 444</button>
+
 <script>
     // features/counter/counterSlice.js begins
     // counterSlice contains
     counterSlice = RTK.createSlice({
         name: 'counter', // name does not matter
         initialState: {
-            value: {items: [], activeLoanId: 0},
+            value: {
+                loans: []
+            },
         },
         // reducers will be later exposed as public actions
         reducers: {
+            addLoan: (state, action) => {
+                state.value.loans.push(action.payload)
+            },
             increment: (state) => {
                 // Redux Toolkit allows us to write "mutating" logic in reducers. It
                 // doesn't actually mutate the state because it uses the immer library,
@@ -39,7 +51,13 @@
         },
     })
     // expose reducers of a slice as public actions
-    const { increment, decrement, incrementByAmount } = counterSlice.actions
+    const { addLoan, increment, decrement, incrementByAmount } = counterSlice.actions
+
+    const addLoanAsync = (loanData) => (dispatch) => {
+        setTimeout(() => {
+            dispatch(addLoan(loanData))
+        }, 1000)
+    }
     const incrementAsync = (amount) => (dispatch) => {
         setTimeout(() => {
             dispatch(incrementByAmount(amount))
@@ -47,13 +65,31 @@
     }
     // expose the state selector
     const selectCount = (state) => state.counter.value
+
+    const selectLoanView = loanId => state => {
+        if (!state.counter.value || !state.counter.value.loans) {
+            return {};
+        }
+        const loans = state.counter.value.loans.filter((loan) => {
+            return loan.loanId === Number(loanId)
+        });
+        return loans ? loans[0] : {};
+    }
+
+    const selectBorrowersByLoanId = loanId => state => {
+        const loans = state.counter.value?.loans?.filter((loan) => {
+            return loan.loanId === Number(loanId)
+        });
+        return loans?.[0]?.borrowers ? loans[0].borrowers : [];
+    }
+
     // expose the slice as a public reducer
     const counterReducer = counterSlice.reducer;
     <!--features/counter/counterSlice.js ends-->
 
     // app/store.js begins
     // compile all the slices into one store, each slice is a reducer and expose it
-    const store = RTK.configureStore({
+    store = RTK.configureStore({
         reducer: {
             counter: counterReducer, // key matters
         },
@@ -61,63 +97,103 @@
     // app/store.js ends
 </script>
 <script type="text/babel">
-    // features/counter/Counter.js begins
-    // import counterSlice: get public actions, get state selector
-    function BorrowerSection() {
-        const count = ReactRedux.useSelector(selectCount);
-        const dispatch = ReactRedux.useDispatch();
-        const [incrementAmount, setIncrementAmount] = React.useState('2');
-        // console.log(count.activeLoanId);
 
+    function BorrowerInBorrowersInLoan(props) {
         return (
             <div>
-                <div>
-                    <button
-                        aria-label="Increment value"
-                        onClick={() => dispatch(increment())}
-                    >
-                        +
-                    </button>
-                    <span>{count.activeLoanId}</span>
-                    <button
-                        aria-label="Decrement value"
-                    >
-                        -
-                    </button>
-                </div>
-                <div>
-                    <button>
-                        Add Amount
-                    </button>
-                    <button>
-                        Add Async
-                    </button>
-                </div>
+                <p>BorrowerInBorrowersInLoan Header {props.loanId}</p>
+                <ul>
+                    <li>ID: {props.data?.id ? props.data.id : 'ID not defined'}</li>
+                    <li>Name: {props.data?.name ? props.data.name : 'name not defined'}</li>
+                </ul>
+                <p>BorrowerInBorrowersInLoan Footer {props.loanId}</p>
             </div>
         );
     }
-    // features/counter/Counter.js ends
 
-    function Loan(){
-        return(
+    function BorrowersInLoan(props) {
+        const borrowerList = ReactRedux.useSelector(selectBorrowersByLoanId(props.loanId));
+        const borrower2 = borrowerList[1];
+        return (
             <div>
-                <p>Loan View Header</p>
-                <BorrowerSection />
-                <p>Loan View Footer</p>
+                <p>BorrowersInLoan View Header {props.loanId}</p>
+                <BorrowerInBorrowersInLoan loanId={props.loanId} data={borrower2} />
+                <p>BorrowersInLoan View Footer</p>
             </div>
         )
     }
 
-    // index.js begins
-    var valueEl = document.getElementById('loan-123')
-    let root = ReactDOM.createRoot(valueEl);
-    root.render(
-        <ReactRedux.Provider store={store}>
-            <Loan />
-        </ReactRedux.Provider>
-    );
-    // index.js ends
+    function LoanViewApp(props) {
+        const loanViewState = ReactRedux.useSelector(selectLoanView(props.loanId));
+        if (!loanViewState) {
+            store.dispatch(addLoan(props.initData));
+        }
+        return (
+            <div>
+                <BorrowersInLoan loanId={props.loanId} />
+            </div>
+        )
+    }
 
+    function renderBorrowersInLoan(id, data) {
+        const ReactDOM = window.ReactDOM;
+        const ReactRedux = window.ReactRedux;
+        const div = document.getElementById(id);
+        const idArray = id.split("__");
+        const indexes = idArray.slice(1);
+        const loanId = indexes[0];
+        let root = ReactDOM.createRoot(div);
+        root.render(
+            <ReactRedux.Provider store={window.store}>
+                <LoanViewApp loanId={loanId} initData={data}/>
+            </ReactRedux.Provider>
+        );
+    }
+</script>
+<script>
+    function render(id, data) {
+        const idArray = id.split("__");
+        const componentId = idArray[0];
+        const componentName = 'render' + componentId.split("-").map((x) => {
+            return x.charAt(0).toUpperCase() + x.slice(1)
+        }).join("");
+        if (typeof window[componentName] === "function") {
+            window[componentName](id, data);
+        }
+    }
+</script>
+<script>
+    function showLoan(loanId) {
+        let div = document.getElementById(`loan-${loanId}`);
+        div.innerHTML = `
+            <div>
+                <p>Loan View Header for ${loanId}</p>
+                <div id="borrowers-in-loan__${loanId}"></div>
+                <p>Loan View Footer</p>
+            </div>
+            <script>
+                console.log("loan-${loanId} HTML from PHP");
+                render('borrowers-in-loan__${loanId}', {
+                    loanId: ${loanId},
+                    borrowers: [
+                        {
+                            id: "1-${loanId}",
+                            name: "Li1-${loanId}"
+                        },
+                        {
+                            id: "2-${loanId}",
+                            name: "Li2-${loanId}"
+                        }
+                    ]
+                });
+            <\/script>
+        `;
+        let scripts = div.getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+            eval(scripts[i].innerHTML);
+        }
+        scripts = null;
+    }
 </script>
 </body>
 </html>
