@@ -124,6 +124,11 @@
     }
 
     function LoanViewApp(props) {
+        // Selectors used with `useSelector` or `mapState` will be re-run after every dispatched action
+        // `useSelector` and `mapState` rely on `===` reference equality checks of the return values to determine
+        // if the component needs to re-render. If a selector always returns new references, it will force
+        // the component to re-render even if the derived data is effectively the same as last time. This is
+        // especially common with array operations like `map()` and `filter()`, which return new array references
         const loanViewState = ReactRedux.useSelector(selectLoanView(props.loanId));
         if (!loanViewState) {
             store.dispatch(addLoan(props.initData));
