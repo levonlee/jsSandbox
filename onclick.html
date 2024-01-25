@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>onclick, window.event</title>
+</head>
+<body>
+
+<button id="button1">AddEventListener: handler without event</button>
+<button id="button2">AddEventListener: handler with event2</button>
+<button id="button3" onclick="handleClick()">handler added in onclick HTML attribute</button>
+<button id="button4" onclick="handleClickWithEvent(event)">handler with event added in onclick HTML attribute</button>
+
+<script>
+	// Don't use window.event (global event)
+	// because "it is not universally supported and even when supported introduces potential fragility to your code."
+
+	// The only best-practice way is to use JavaScript addEventListener to add an event handler function with an input
+	// parameter as the event
+
+	// Unfortunately, there's no best-practice way to pass the event to the event handler function in the HTML event attribute
+
+	// For now, it's not a big issue.
+
+	// But for HTML event attribute, we should know that the global event is available without passing to it.
+	// So handleClick() is good enough: doesn't have to be handleClick(event)
+
+	document.getElementById('button1').addEventListener("click", function () {
+		console.log('event === window.event', event === window.event); // true
+	});
+	document.getElementById('button2').addEventListener("click", function (event2) {
+		console.log('event2 === window.event', event2 === window.event); // true
+		console.log('event === window.event', event === window.event); // true
+		console.log('event2 instanceof MouseEvent', event2 instanceof MouseEvent); // true
+	});
+	function handleClick() {
+		console.log('event === window.event', event === window.event); // true
+	}
+	function handleClickWithEvent(e) {
+		console.log('event === window.event', event === window.event); // true
+		console.log('e === window.event', e === window.event); // true
+	}
+</script>
+
+</body>
+</html>
