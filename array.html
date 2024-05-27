@@ -13,9 +13,6 @@
 </style>
 
 <h1># Array.prototype.reduce()</h1>
-<input id="checkbox-1" type="checkbox" class="batch-element hide" checked />
-<input id="checkbox-2" type="checkbox" class="batch-element hide" checked />
-
 <script>
     function arrayReduceForArray() {
         let sum = [0, 1, 2, 3].reduce(function (carry, item) {
@@ -28,9 +25,10 @@
         console.log(_.isEqual(flattened, [0, 1, 2, 3, 4, 5]));
     }
 </script>
-
 <button onclick="arrayReduceForArray();">arrayReduceForArray();</button>
 
+<input id="checkbox-1" type="checkbox" class="batch-element hide" checked />
+<input id="checkbox-2" type="checkbox" class="batch-element hide" checked />
 <script>
     function arrayReduceForArrayLike() {
         let allEntries = document.getElementsByClassName('batch-element');
@@ -43,7 +41,6 @@
         console.log(_.isEqual(selectedItems, ['checkbox-1', 'checkbox-2']));
     }
 </script>
-
 <button onclick="arrayReduceForArrayLike();">arrayReduceForArrayLike();</button>
 
 </body>
