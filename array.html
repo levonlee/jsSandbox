@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array</title>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+</head>
+<body>
+<style>
+    .hide {
+        display: none;
+    }
+</style>
+
+<h1># Array.prototype.reduce()</h1>
+<input id="checkbox-1" type="checkbox" class="batch-element hide" checked />
+<input id="checkbox-2" type="checkbox" class="batch-element hide" checked />
+
+<script>
+    function arrayReduceForArrayLike() {
+        let allEntries = document.getElementsByClassName('batch-element');
+        let selectedItems = [].reduce.call(allEntries, function (carry, item) {
+            if (item.checked) {
+                carry.push(item.id);
+            }
+            return carry;
+        }, []);
+        console.log(_.isEqual(selectedItems, ['checkbox-1', 'checkbox-2']));
+    }
+</script>
+
+<button onclick="arrayReduceForArrayLike();">arrayReduceForArrayLike();</button>
+
+</body>
+</html>
