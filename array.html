@@ -17,6 +17,21 @@
 <input id="checkbox-2" type="checkbox" class="batch-element hide" checked />
 
 <script>
+    function arrayReduceForArray() {
+        let sum = [0, 1, 2, 3].reduce(function (carry, item) {
+            return carry + item;
+        }, 0);
+        console.log(sum === 6);
+        let flattened = [[0, 1], [2, 3], [4, 5]].reduce(function (carry, item) {
+            return carry.concat(item);
+        }, []);
+        console.log(_.isEqual(flattened, [0, 1, 2, 3, 4, 5]));
+    }
+</script>
+
+<button onclick="arrayReduceForArray();">arrayReduceForArray();</button>
+
+<script>
     function arrayReduceForArrayLike() {
         let allEntries = document.getElementsByClassName('batch-element');
         let selectedItems = [].reduce.call(allEntries, function (carry, item) {
